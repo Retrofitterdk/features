@@ -18,6 +18,8 @@ require_once( 'classes/class-woothemes-features.php' );
 require_once( 'classes/class-woothemes-features-taxonomy.php' );
 require_once( 'woothemes-features-template.php' );
 require_once( 'classes/class-woothemes-widget-features.php' );
+require_once( 'admin/class-settings.php' );
+
 global $woothemes_features;
 $woothemes_features = new Woothemes_Features( __FILE__ );
 $woothemes_features->version = '1.5.0';
