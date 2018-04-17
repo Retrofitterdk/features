@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) || ! function_exists( 'woothemes_features' ) ) exit;
  * @since  1.0.0
  * @access public
  */
-final class Settings_Page {
+final class Feature_Settings_Page {
 
 	/**
 	 * Settings page name.
@@ -52,10 +52,10 @@ final class Settings_Page {
 		// Create the settings page.
 		$this->settings_page = add_submenu_page(
 			'edit.php?post_type=' . 'feature',
-			esc_html__( 'Toot Settings', 'toot' ),
-			esc_html__( 'Settings',      'toot' ),
-			apply_filters( 'toot_settings_capability', 'manage_options' ),
-			'toot-settings',
+			esc_html__( 'Toot Settings', 'woothemes-features' ),
+			esc_html__( 'Settings',      'woothemes-features' ),
+			'manage_options',
+			'feature-settings',
 			array( $this, 'settings_page' )
 		);
 
@@ -79,23 +79,23 @@ final class Settings_Page {
 	function register_settings() {
 
 		// Register the setting.
-		register_setting( 'toot_settings', 'toot_settings', array( $this, 'validate_settings' ) );
+		register_setting( 'feature_settings', 'feature_settings', array( $this, 'validate_settings' ) );
 
 		/* === Settings Sections === */
 
-		add_settings_section( 'general',    esc_html__( 'General Settings', 'toot' ), array( $this, 'section_general'    ), $this->settings_page );
-		add_settings_section( 'permalinks', esc_html__( 'Permalinks',       'toot' ), array( $this, 'section_permalinks' ), $this->settings_page );
+		add_settings_section( 'general',    esc_html__( 'General Settings', 'woothemes-features' ), array( $this, 'section_general'    ), $this->settings_page );
+		add_settings_section( 'permalinks', esc_html__( 'Permalinks',       'woothemes-features' ), array( $this, 'section_permalinks' ), $this->settings_page );
 
 		/* === Settings Fields === */
 
 		// General section fields
-		add_settings_field( 'archive_title',       esc_html__( 'Title',       'toot' ), array( $this, 'field_archive_title'       ), $this->settings_page, 'general' );
-		add_settings_field( 'archive_description', esc_html__( 'Description', 'toot' ), array( $this, 'field_archive_description' ), $this->settings_page, 'general' );
+		add_settings_field( 'archive_title',       esc_html__( 'Title',       'woothemes-features' ), array( $this, 'field_archive_title'       ), $this->settings_page, 'general' );
+		add_settings_field( 'archive_description', esc_html__( 'Description', 'woothemes-features' ), array( $this, 'field_archive_description' ), $this->settings_page, 'general' );
 
 		// Permalinks section fields.
-		add_settings_field( 'rewrite_base',             esc_html__( 'Rewrite Base',     'toot' ), array( $this, 'field_rewrite_base'             ), $this->settings_page, 'permalinks' );
-		add_settings_field( 'testimonial_rewrite_base', esc_html__( 'Testimonial Slug', 'toot' ), array( $this, 'field_testimonial_rewrite_base' ), $this->settings_page, 'permalinks' );
-		add_settings_field( 'category_rewrite_base',    esc_html__( 'Category Slug',    'toot' ), array( $this, 'field_category_rewrite_base'    ), $this->settings_page, 'permalinks' );
+		add_settings_field( 'rewrite_base',             esc_html__( 'Rewrite Base',     'woothemes-features' ), array( $this, 'field_rewrite_base'             ), $this->settings_page, 'permalinks' );
+		add_settings_field( 'testimonial_rewrite_base', esc_html__( 'Testimonial Slug', 'woothemes-features' ), array( $this, 'field_testimonial_rewrite_base' ), $this->settings_page, 'permalinks' );
+		add_settings_field( 'category_rewrite_base',    esc_html__( 'Category Slug',    'woothemes-features' ), array( $this, 'field_category_rewrite_base'    ), $this->settings_page, 'permalinks' );
 	}
 
 	/**
@@ -109,10 +109,10 @@ final class Settings_Page {
 	function validate_settings( $settings ) {
 
 		// Text boxes.
-		$settings['rewrite_base']             = $settings['rewrite_base']             ? trim( strip_tags( $settings['rewrite_base'] ), '/' )             : 'toot';
+		$settings['rewrite_base']             = $settings['rewrite_base']             ? trim( strip_tags( $settings['rewrite_base'] ), '/' )             : 'woothemes-features';
 		$settings['testimonial_rewrite_base'] = $settings['testimonial_rewrite_base'] ? trim( strip_tags( $settings['testimonial_rewrite_base'] ), '/' ) : '';
 		$settings['category_rewrite_base']    = $settings['category_rewrite_base']    ? trim( strip_tags( $settings['category_rewrite_base']  ), '/' )   : '';
-		$settings['archive_title']            = $settings['archive_title']            ? strip_tags( $settings['archive_title'] )                         : esc_html__( 'Testimonials', 'toot' );
+		$settings['archive_title']            = $settings['archive_title']            ? strip_tags( $settings['archive_title'] )                         : esc_html__( 'Testimonials', 'woothemes-features' );
 
 		// Kill evil scripts.
 		$settings['archive_description'] = stripslashes( wp_filter_post_kses( addslashes( $settings['archive_description'] ) ) );
@@ -137,7 +137,7 @@ final class Settings_Page {
 	public function section_general() { ?>
 
 		<p class="description">
-			<?php esc_html_e( 'General testimonial settings for your site.', 'toot' ); ?>
+			<?php esc_html_e( 'General testimonial settings for your site.', 'woothemes-features' ); ?>
 		</p>
 	<?php }
 
@@ -151,9 +151,9 @@ final class Settings_Page {
 	public function field_archive_title() { ?>
 
 		<label>
-			<input type="text" class="regular-text" name="toot_settings[archive_title]" value="<?php echo esc_attr( toot_get_archive_title() ); ?>" />
+			<input type="text" class="regular-text" name="feature_settings[archive_title]" value="<?php echo esc_attr( feature_get_archive_title() ); ?>" />
 			<br />
-			<span class="description"><?php esc_html_e( 'The name of your testimonials. May be used for the testimonials archive title and other places, depending on your theme.', 'toot' ); ?></span>
+			<span class="description"><?php esc_html_e( 'The name of your testimonials. May be used for the testimonials archive title and other places, depending on your theme.', 'woothemes-features' ); ?></span>
 		</label>
 	<?php }
 
@@ -167,17 +167,17 @@ final class Settings_Page {
 	public function field_archive_description() {
 
 		wp_editor(
-			toot_get_archive_description(),
-			'toot_archive_description',
+			feature_get_archive_description(),
+			'feature_archive_description',
 			array(
-				'textarea_name'    => 'toot_settings[archive_description]',
+				'textarea_name'    => 'feature_settings[archive_description]',
 				'drag_drop_upload' => true,
 				'editor_height'    => 150
 			)
 		); ?>
 
 		<p>
-			<span class="description"><?php esc_html_e( 'Your testimonials description. This may be shown by your theme on the testimonials archive page.', 'toot' ); ?></span>
+			<span class="description"><?php esc_html_e( 'Your testimonials description. This may be shown by your theme on the testimonials archive page.', 'woothemes-features' ); ?></span>
 		</p>
 	<?php }
 
@@ -191,7 +191,7 @@ final class Settings_Page {
 	public function section_permalinks() { ?>
 
 		<p class="description">
-			<?php esc_html_e( 'Set up custom permalinks for the testimonials section on your site.', 'toot' ); ?>
+			<?php esc_html_e( 'Set up custom permalinks for the testimonials section on your site.', 'woothemes-features' ); ?>
 		</p>
 	<?php }
 
@@ -206,7 +206,7 @@ final class Settings_Page {
 
 		<label>
 			<code><?php echo esc_url( home_url( '/' ) ); ?></code>
-			<input type="text" class="regular-text code" name="toot_settings[rewrite_base]" value="<?php echo esc_attr( toot_get_rewrite_base() ); ?>" />
+			<input type="text" class="regular-text code" name="feature_settings[rewrite_base]" value="<?php echo esc_attr( feature_get_rewrite_base() ); ?>" />
 		</label>
 	<?php }
 
@@ -220,8 +220,8 @@ final class Settings_Page {
 	public function field_testimonial_rewrite_base() { ?>
 
 		<label>
-			<code><?php echo esc_url( home_url( toot_get_rewrite_base() . '/' ) ); ?></code>
-			<input type="text" class="regular-text code" name="toot_settings[testimonial_rewrite_base]" value="<?php echo esc_attr( toot_get_testimonial_rewrite_base() ); ?>" />
+			<code><?php echo esc_url( home_url( feature_get_rewrite_base() . '/' ) ); ?></code>
+			<input type="text" class="regular-text code" name="feature_settings[testimonial_rewrite_base]" value="<?php echo esc_attr( feature_get_testimonial_rewrite_base() ); ?>" />
 		</label>
 	<?php }
 
@@ -235,8 +235,8 @@ final class Settings_Page {
 	public function field_category_rewrite_base() { ?>
 
 		<label>
-			<code><?php echo esc_url( home_url( toot_get_rewrite_base() . '/' ) ); ?></code>
-			<input type="text" class="regular-text code" name="toot_settings[category_rewrite_base]" value="<?php echo esc_attr( toot_get_category_rewrite_base() ); ?>" />
+			<code><?php echo esc_url( home_url( feature_get_rewrite_base() . '/' ) ); ?></code>
+			<input type="text" class="regular-text code" name="feature_settings[category_rewrite_base]" value="<?php echo esc_attr( feature_get_category_rewrite_base() ); ?>" />
 		</label>
 	<?php }
 
@@ -254,14 +254,14 @@ final class Settings_Page {
 			flush_rewrite_rules(); ?>
 
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Settings', 'toot' ); ?></h1>
+			<h1><?php esc_html_e( 'Settings', 'woothemes-features' ); ?></h1>
 
 			<?php settings_errors(); ?>
 
 			<form method="post" action="options.php">
-				<?php settings_fields( 'toot_settings' ); ?>
+				<?php settings_fields( 'feature_settings' ); ?>
 				<?php do_settings_sections( $this->settings_page ); ?>
-				<?php submit_button( esc_attr__( 'Update Settings', 'toot' ), 'primary' ); ?>
+				<?php submit_button( esc_attr__( 'Update Settings', 'woothemes-features' ), 'primary' ); ?>
 			</form>
 
 		</div><!-- wrap -->
@@ -283,7 +283,7 @@ final class Settings_Page {
 		$screen->add_help_tab(
 			array(
 				'id'       => 'general',
-				'title'    => esc_html__( 'General Settings', 'toot' ),
+				'title'    => esc_html__( 'General Settings', 'woothemes-features' ),
 				'callback' => array( $this, 'help_tab_general' )
 			)
 		);
@@ -292,13 +292,13 @@ final class Settings_Page {
 		$screen->add_help_tab(
 			array(
 				'id'       => 'permalinks',
-				'title'    => esc_html__( 'Permalinks', 'toot' ),
+				'title'    => esc_html__( 'Permalinks', 'woothemes-features' ),
 				'callback' => array( $this, 'help_tab_permalinks' )
 			)
 		);
 
 		// Set the help sidebar.
-		$screen->set_help_sidebar( toot_get_help_sidebar_text() );
+		$screen->set_help_sidebar( features_get_help_sidebar_text() );
 	}
 
 	/**
@@ -311,8 +311,8 @@ final class Settings_Page {
 	public function help_tab_general() { ?>
 
 		<ul>
-			<li><?php _e( '<strong>Title:</strong> Allows you to set the title for the testimonials section on your site. This is general shown on the testimonials archive, but themes and other plugins may use it in other ways.', 'toot' ); ?></li>
-			<li><?php _e( '<strong>Description:</strong> This is the description for your testimonials page. Some themes may display this on the testimonials archive.', 'toot' ); ?></li>
+			<li><?php _e( '<strong>Title:</strong> Allows you to set the title for the testimonials section on your site. This is general shown on the testimonials archive, but themes and other plugins may use it in other ways.', 'woothemes-features' ); ?></li>
+			<li><?php _e( '<strong>Description:</strong> This is the description for your testimonials page. Some themes may display this on the testimonials archive.', 'woothemes-features' ); ?></li>
 		</ul>
 	<?php }
 
@@ -326,14 +326,14 @@ final class Settings_Page {
 	public function help_tab_permalinks() { ?>
 
 		<ul>
-			<li><?php _e( '<strong>Rewrite Base:</strong> The primary URL for the testimonials section on your site. It lists your testimonials.', 'toot' ); ?></li>
+			<li><?php _e( '<strong>Rewrite Base:</strong> The primary URL for the testimonials section on your site. It lists your testimonials.', 'woothemes-features' ); ?></li>
 			<li>
-				<?php _e( '<strong>Testimonial Slug:</strong> The slug for single testimonials. You can use something custom, leave this field empty, or use one of the following tags:', 'toot' ); ?>
+				<?php _e( '<strong>Testimonial Slug:</strong> The slug for single testimonials. You can use something custom, leave this field empty, or use one of the following tags:', 'woothemes-features' ); ?>
 				<ul>
-					<li><?php printf( esc_html__( '%s - The testimonial category.', 'toot' ), '<code>%' . toot_get_category_taxonomy() . '%</code>' ); ?></li>
+					<li><?php printf( esc_html__( '%s - The testimonial category.', 'woothemes-features' ), '<code>%' . 'feature-category' . '%</code>' ); ?></li>
 				</ul>
 			</li>
-			<li><?php _e( '<strong>Category Slug:</strong> The base slug used for category archives.', 'toot' ); ?></li>
+			<li><?php _e( '<strong>Category Slug:</strong> The base slug used for category archives.', 'woothemes-features' ); ?></li>
 		</ul>
 	<?php }
 
@@ -355,4 +355,4 @@ final class Settings_Page {
 	}
 }
 
-Settings_Page::get_instance();
+Feature_Settings_Page::get_instance();
