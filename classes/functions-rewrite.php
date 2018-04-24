@@ -17,27 +17,27 @@
  * @access public
  * @return string
  */
-function toot_get_testimonial_rewrite_slug() {
-	$rewrite_base     = toot_get_rewrite_base();
-	$testimonial_base = toot_get_testimonial_rewrite_base();
+function feature_get_testimonial_rewrite_slug() {
+	$rewrite_base     = feature_get_rewrite_base();
+	$feature_base = feature_get_testimonial_rewrite_base();
 
-	$slug = $testimonial_base ? trailingslashit( $rewrite_base ) . $testimonial_base : $rewrite_base;
+	$slug = $feature_base ? trailingslashit( $rewrite_base ) . $feature_base : $rewrite_base;
 
-	return apply_filters( 'toot_get_testimonial_rewrite_slug', $slug );
+	return apply_filters( 'feature_get_testimonial_rewrite_slug()', $slug );
 }
 
 /**
  * Returns the category rewrite slug used for category archives.
- *
+
  * @since  1.0.0
  * @access public
  * @return string
  */
-function toot_get_category_rewrite_slug() {
-	$rewrite_base  = toot_get_rewrite_base();
-	$category_base = toot_get_category_rewrite_base();
+function feature_get_category_rewrite_slug() {
+	$rewrite_base  = feature_get_rewrite_base();
+	$category_base = feature_get_category_rewrite_base();
 
 	$slug = $category_base ? trailingslashit( $rewrite_base ) . $category_base : $rewrite_base;
 
-	return apply_filters( 'toot_get_category_rewrite_slug', $slug );
+	return apply_filters( 'feature_get_category_rewrite_slug', $slug );
 }
