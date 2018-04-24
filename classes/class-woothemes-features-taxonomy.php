@@ -81,8 +81,29 @@ class Woothemes_Features_Taxonomy {
 	 * @return  array Default arguments.
 	 */
 	private function _get_default_args () {
-		return array( 'labels' => $this->_get_default_labels(), 'public' => true, 'hierarchical' => true, 'show_ui' => true, 'show_admin_column' => true, 'query_var' => true, 'show_in_nav_menus' => false, 'show_tagcloud' => false );
+		return array(
+			'labels' => $this->_get_default_labels(),
+			'public' => true,
+			'hierarchical' => true,
+			'show_ui' => true,
+			'show_admin_column' => true,
+			'query_var' => $this->token,
+			'show_in_nav_menus' => false,
+			'show_tagcloud' => false,
+
+			// The rewrite handles the URL structure.
+			'rewrite' => array(
+				'slug'         => feature_get_category_rewrite_slug(),
+				'with_front'   => false,
+				'hierarchical' => false,
+				'ep_mask'      => EP_NONE
+			),
+
+		);
 	} // End _get_default_args()
+
+
+
 
 	/**
 	 * Return an array of default labels.
