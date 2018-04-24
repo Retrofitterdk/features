@@ -64,54 +64,20 @@ class Woothemes_Features {
 		add_action( 'after_setup_theme', array( $this, 'register_image_sizes' ) );
 	} // End __construct()
 
+
 	/**
-	 * Register the post type.
-	 *
+	 * Register the "feature" posttype.
 	 * @access public
-	 * @param string $token
-	 * @param string 'Features'
-	 * @param string 'Features'
-	 * @param array $supports
+	 * @since  1.3.0
 	 * @return void
 	 */
 	public function register_post_type () {
-		$labels = array(
-			'name' => _x( 'Features', 'post type general name', 'woothemes-features' ),
-			'singular_name' => _x( 'Feature', 'post type singular name', 'woothemes-features' ),
-			'add_new' => _x( 'Add New', 'feature', 'woothemes-features' ),
-			'add_new_item' => sprintf( __( 'Add New %s', 'woothemes-features' ), __( 'Feature', 'woothemes-features' ) ),
-			'edit_item' => sprintf( __( 'Edit %s', 'woothemes-features' ), __( 'Feature', 'woothemes-features' ) ),
-			'new_item' => sprintf( __( 'New %s', 'woothemes-features' ), __( 'Feature', 'woothemes-features' ) ),
-			'all_items' => sprintf( __( 'All %s', 'woothemes-features' ), __( 'Features', 'woothemes-features' ) ),
-			'view_item' => sprintf( __( 'View %s', 'woothemes-features' ), __( 'Feature', 'woothemes-features' ) ),
-			'search_items' => sprintf( __( 'Search %a', 'woothemes-features' ), __( 'Features', 'woothemes-features' ) ),
-			'not_found' =>  sprintf( __( 'No %s Found', 'woothemes-features' ), __( 'Features', 'woothemes-features' ) ),
-			'not_found_in_trash' => sprintf( __( 'No %s Found In Trash', 'woothemes-features' ), __( 'Features', 'woothemes-features' ) ),
-			'parent_item_colon' => '',
-			'menu_name' => __( 'Features', 'woothemes-features' )
+		$this->feature_post_type = new Woothemes_Features_Posttype( $this->token ); // Leave arguments empty, to use the default arguments.
+		$this->feature_post_type->register();
+	} // End register_taxonomy()
 
-		);
 
-		$single_slug = apply_filters( 'woothemes_features_single_slug', _x( 'feature', 'single post url slug', 'woothemes-features' ) );
-		$archive_slug = apply_filters( 'woothemes_features_archive_slug', _x( 'features', 'post archive url slug', 'woothemes-features' ) );
 
-		$args = array(
-			'labels' => $labels,
-			'public' => true,
-			'publicly_queryable' => true,
-			'show_ui' => true,
-			'show_in_menu' => true,
-			'query_var' => true,
-			'rewrite' => array( 'slug' => $single_slug ),
-			'capability_type' => 'post',
-			'has_archive' => $archive_slug,
-			'hierarchical' => false,
-			'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
-			'menu_position' => 5,
-			'menu_icon' => ''
-		);
-		register_post_type( $this->token, apply_filters( 'woothemes_features_post_type_args', $args ) );
-	} // End register_post_type()
 
 	/**
 	 * Register the "feature-category" taxonomy.
@@ -338,7 +304,7 @@ class Woothemes_Features {
 		wp_register_style( 'woothemes-features-admin', esc_url( $this->assets_url . 'css/admin.css' ), array(), '1.0.2' );
 		wp_enqueue_style( 'woothemes-features-admin' );
 	} // End enqueue_admin_styles()
-	
+
 	/**
 	 * Enqueue post type layout CSS.
 	 *
@@ -564,7 +530,7 @@ class Woothemes_Features {
 	public function ensure_post_thumbnails_support () {
 		if ( ! current_theme_supports( 'post-thumbnails' ) ) { add_theme_support( 'post-thumbnails' ); }
 	} // End ensure_post_thumbnails_support()
-	
+
 	/**
 	 * Load the front-end layout styles for themes that don't include a built-in support for Features.
 	 * @since  1.5.0
@@ -575,5 +541,5 @@ class Woothemes_Features {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_layout_styles' ), 10 );
 		}
 	} // End load_frontend_layout_css()
-	
+
 } // End Class
