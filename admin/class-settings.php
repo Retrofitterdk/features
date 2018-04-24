@@ -208,6 +208,7 @@ final class Feature_Settings_Page {
 			<code><?php echo esc_url( home_url( '/' ) ); ?></code>
 			<input type="text" class="regular-text code" name="feature_settings[rewrite_base]" value="<?php echo esc_attr( feature_get_rewrite_base() ); ?>" />
 		</label>
+		<code><?php echo feature_get_rewrite_base(); ?></code>
 	<?php }
 
 	/**
@@ -223,6 +224,7 @@ final class Feature_Settings_Page {
 			<code><?php echo esc_url( home_url( feature_get_rewrite_base() . '/' ) ); ?></code>
 			<input type="text" class="regular-text code" name="feature_settings[testimonial_rewrite_base]" value="<?php echo esc_attr( feature_get_testimonial_rewrite_base() ); ?>" />
 		</label>
+		<code><?php echo feature_get_testimonial_rewrite_slug(); ?></code>
 	<?php }
 
 	/**
@@ -238,6 +240,7 @@ final class Feature_Settings_Page {
 			<code><?php echo esc_url( home_url( feature_get_rewrite_base() . '/' ) ); ?></code>
 			<input type="text" class="regular-text code" name="feature_settings[category_rewrite_base]" value="<?php echo esc_attr( feature_get_category_rewrite_base() ); ?>" />
 		</label>
+		<code><?php echo feature_get_category_rewrite_slug(); ?></code>
 	<?php }
 
 	/**
