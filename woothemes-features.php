@@ -14,11 +14,13 @@
  * @since 1.0.0
  */
 
-require_once( 'classes/class-woothemes-features.php' );
-require_once( 'classes/class-woothemes-features-taxonomy.php' );
 require_once( 'woothemes-features-template.php' );
+require_once( 'classes/class-woothemes-features.php' );
+require_once( 'classes/class-woothemes-features-posttype.php' );
+require_once( 'classes/class-woothemes-features-taxonomy.php' );
 require_once( 'classes/class-woothemes-widget-features.php' );
 require_once( 'classes/functions-options.php' );
+require_once( 'classes/functions-rewrite.php' );
 require_once( 'admin/class-settings.php' );
 require_once( 'admin/functions-admin.php' );
 
